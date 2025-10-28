@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    body {
+        @apply bg-game-bg font-game text-text-dark;
+        margin: 0;
+        padding: 0;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+}
+
+@layer utilities {
+    .tile-appear {
+        animation: pop 0.2s ease-out;
+    }
+
+    .win-tile {
+        animation: winPulse 0.6s ease-in-out;
+        background: linear-gradient(135deg, #edc22e 0%, #f59563 100%);
+    }
+}
