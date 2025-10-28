@@ -11,4 +11,5 @@ COPY build/ /nakama/data/modules/build/
 EXPOSE 7349 7350 7351
 
 # Entrypoint uses the DATABASE_ADDRESS env variable passed from Render
-CMD ["/bin/sh", "-ecx", "/nakama/nakama migrate up --database.address $DATABASE_ADDRESS && exec /nakama/nakama --config /nakama/data/local.yml --database.address $DATABASE_ADDRESS"]
+CMD ["/bin/sh", "-ecx", "echo DATABASE_ADDRESS=$DATABASE_ADDRESS && /nakama/nakama migrate up --database.address $DATABASE_ADDRESS && exec /nakama/nakama --config /nakama/data/local.yml --database.address $DATABASE_ADDRESS"]
+
