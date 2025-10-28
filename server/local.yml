@@ -16,7 +16,10 @@ socket:
     port: 7350
     max_message_size_bytes: 4096
 
-# REMOVE or comment out the 'database:' section entirely!
-
 runtime:
     js_entrypoint: 'build/index.js'
+cors:
+    enabled: true
+    allow_origin: ['https://tic-tac-toe-lila.netlify.app', 'http://localhost:8080']
+    allow_headers: ['*']
+    allow_credentials: true
