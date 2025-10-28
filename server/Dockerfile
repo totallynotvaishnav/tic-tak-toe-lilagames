@@ -1,5 +1,6 @@
 # Use official Nakama image
-FROM heroiclabs/nakama:3.17.1
+FROM heroiclabs/nakama:3.20.1
+
 
 # Use your config (rename railway.yml to local.yml if needed!)
 COPY local.yml /nakama/data/local.yml
