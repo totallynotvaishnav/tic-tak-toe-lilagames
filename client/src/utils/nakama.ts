@@ -1,9 +1,10 @@
 import { Client, Session, Socket } from '@heroiclabs/nakama-js';
 
-export const NAKAMA_SERVER = 'localhost';
-export const NAKAMA_PORT = '7350';
-export const NAKAMA_USE_SSL = false;
-export const NAKAMA_SERVER_KEY = 'defaultkey';
+// Use Vite environment variables for Nakama config
+export const NAKAMA_SERVER = import.meta.env.VITE_NAKAMA_SERVER || 'localhost';
+export const NAKAMA_PORT = import.meta.env.VITE_NAKAMA_PORT || '7350';
+export const NAKAMA_USE_SSL = import.meta.env.VITE_NAKAMA_USE_SSL === 'true';
+export const NAKAMA_SERVER_KEY = import.meta.env.VITE_NAKAMA_SERVER_KEY || 'defaultkey';
 
 export const OpCode = {
     MOVE: 1,
