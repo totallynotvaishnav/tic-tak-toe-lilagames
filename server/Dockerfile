@@ -14,6 +14,6 @@ COPY local.yml /nakama/data/local.yml
 COPY build/ /nakama/data/modules/build/
 
 # Expose Nakama ports
-EXPOSE 7349 7350 7351
+EXPOSE 10000 10001
 
 

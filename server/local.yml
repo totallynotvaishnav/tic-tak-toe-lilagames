@@ -18,8 +18,7 @@ socket:
 
 runtime:
     js_entrypoint: 'build/index.js'
+
 cors:
-    enabled: true
-    allow_origin: ['https://tic-tac-toe-lila.netlify.app', 'http://localhost:8080']
-    allow_headers: ['*']
-    allow_credentials: true
+    allowed_headers: ['*']
+    allowed_origins: ['*'] # For testing only - restrict to your origin for production!
