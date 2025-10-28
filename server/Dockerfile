@@ -1,16 +1,14 @@
 # Use official Nakama image
 FROM heroiclabs/nakama:3.20.1
 
-
-# Use your config (rename railway.yml to local.yml if needed!)
+# Copy config and game modules
 COPY local.yml /nakama/data/local.yml
-
-# Copy game module code (your build/index.js and dependencies)
 COPY build/ /nakama/data/modules/build/
 
-# Expose Nakama ports (API, console, and GRPC if needed)
+# Expose Nakama ports
 EXPOSE 7349 7350 7351
 
-# Entrypoint uses the DATABASE_ADDRESS env variable passed from Render
-CMD ["/bin/sh", "-ecx", "echo DATABASE_ADDRESS=$DATABASE_ADDRESS && /nakama/nakama migrate up --database.address $DATABASE_ADDRESS && exec /nakama/nakama --config /nakama/data/local.yml --database.address $DATABASE_ADDRESS"]
-
+# Use DATABASE_ADDRESS from environment
+CMD /bin/sh -ecx "echo Using DATABASE_ADDRESS=\$DATABASE_ADDRESS && \
+    /nakama/nakama migrate up --database.address \$DATABASE_ADDRESS && \
+    exec /nakama/nakama --config /nakama/data/local.yml --database.address \$DATABASE_ADDRESS"
