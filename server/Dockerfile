@@ -9,6 +9,5 @@ COPY build/ /nakama/data/modules/build/
 EXPOSE 7349 7350 7351
 
 # Use DATABASE_ADDRESS from environment
-CMD /bin/sh -ecx "echo Using DATABASE_ADDRESS=\$DATABASE_ADDRESS && \
-    /nakama/nakama migrate up --database.address \$DATABASE_ADDRESS && \
-    exec /nakama/nakama --config /nakama/data/local.yml --database.address \$DATABASE_ADDRESS"
+CMD ["/bin/sh", "-ecx", "env && echo Using DATABASE_ADDRESS=$DATABASE_ADDRESS && /nakama/nakama migrate up --database.address $DATABASE_ADDRESS && exec /nakama/nakama --config /nakama/data/local.yml --database.address $DATABASE_ADDRESS"]
+
