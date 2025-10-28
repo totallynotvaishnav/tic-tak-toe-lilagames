@@ -7,13 +7,13 @@ logger:
     file: ''
 
 console:
-    port: 7351
+    port: 10001
     username: 'admin'
     password: 'password'
 
 socket:
     server_key: 'defaultkey'
-    port: 7350
+    port: 10000
     max_message_size_bytes: 4096
 
 runtime:
