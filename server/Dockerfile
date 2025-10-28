@@ -1,6 +1,14 @@
 # Use official Nakama image
 FROM heroiclabs/nakama:3.20.1
 
+
+# Copy entrypoint script
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+# Use entrypoint script for Render
+ENTRYPOINT ["/entrypoint.sh"]
+
 # Copy config and game modules
 COPY local.yml /nakama/data/local.yml
 COPY build/ /nakama/data/modules/build/
@@ -8,6 +16,4 @@ COPY build/ /nakama/data/modules/build/
 # Expose Nakama ports
 EXPOSE 7349 7350 7351
 
-# Use DATABASE_ADDRESS from environment and print all env vars for debugging
-CMD ["/bin/sh", "-ecx", "echo '--- ENVIRONMENT VARIABLES ---' && env && echo '-----------------------------' && echo Using DATABASE_ADDRESS=$DATABASE_ADDRESS && /nakama/nakama migrate up --database.address $DATABASE_ADDRESS && exec /nakama/nakama --config /nakama/data/local.yml --database.address $DATABASE_ADDRESS"]
 
