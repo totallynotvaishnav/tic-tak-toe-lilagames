@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES2015",
-    "module": "amd",
+  "module": "none",
     "outFile": "./build/index.js",
     "strict": true,
     "esModuleInterop": true,

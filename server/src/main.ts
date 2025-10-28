@@ -1,3 +1,6 @@
+// src/main.ts
+// Nakama TypeScript Server for Tic-Tac-Toe Multiplayer Game
+
 const InitModule: nkruntime.InitModule = function (
     ctx: nkruntime.Context,
     logger: nkruntime.Logger,
@@ -625,3 +628,5 @@ const matchmakerMatched: nkruntime.MatchmakerMatchedFunction = function (
 
     return matchId;
 };
+
+export { InitModule };
