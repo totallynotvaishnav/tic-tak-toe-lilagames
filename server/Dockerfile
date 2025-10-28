@@ -8,6 +8,6 @@ COPY build/ /nakama/data/modules/build/
 # Expose Nakama ports
 EXPOSE 7349 7350 7351
 
-# Use DATABASE_ADDRESS from environment
-CMD ["/bin/sh", "-ecx", "env && echo Using DATABASE_ADDRESS=$DATABASE_ADDRESS && /nakama/nakama migrate up --database.address $DATABASE_ADDRESS && exec /nakama/nakama --config /nakama/data/local.yml --database.address $DATABASE_ADDRESS"]
+# Use DATABASE_ADDRESS from environment and print all env vars for debugging
+CMD ["/bin/sh", "-ecx", "echo '--- ENVIRONMENT VARIABLES ---' && env && echo '-----------------------------' && echo Using DATABASE_ADDRESS=$DATABASE_ADDRESS && /nakama/nakama migrate up --database.address $DATABASE_ADDRESS && exec /nakama/nakama --config /nakama/data/local.yml --database.address $DATABASE_ADDRESS"]
 
