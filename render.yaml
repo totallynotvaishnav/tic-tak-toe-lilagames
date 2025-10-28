@@ -1,0 +1,20 @@
+services:
+    - type: pserv
+      name: nakama-server
+      env: docker
+      region: oregon
+      plan: starter
+      dockerfilePath: server/docker-compose.yml
+      envVars:
+          - key: DATABASE_ADDRESS
+            value: postgres://postgres:localdb@postgres:5432/nakama
+      autoDeploy: true
+
+    - type: postgres
+      name: nakama-db
+      region: oregon
+      plan: starter
+      databaseName: nakama
+      user: postgres
+      password: localdb
+      autoDeploy: true
