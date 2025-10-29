@@ -5,7 +5,7 @@ const isProduction = import.meta.env.PROD;
 
 // Use production server if in production, otherwise localhost
 export const NAKAMA_SERVER = isProduction ? import.meta.env.VITE_NAKAMA_SERVER : 'localhost';
-export const NAKAMA_PORT = isProduction ? '' : '7350';
+export const NAKAMA_PORT = isProduction ? '' : '10000';
 export const NAKAMA_USE_SSL = isProduction;
 export const NAKAMA_SERVER_KEY = isProduction
     ? import.meta.env.VITE_NAKAMA_SERVER_KEY

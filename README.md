@@ -21,7 +21,7 @@ A real-time multiplayer Tic-Tac-Toe game built with **Nakama** game server and R
 ### Prerequisites
 
 -   [Docker Desktop](https://www.docker.com/products/docker-desktop) installed and running
--   Python 3 (for local web server)
+-   node.js and npm installed
 
 ### Run Locally
 
@@ -34,13 +34,21 @@ cd tic-tak-toe-lilagames
 
 2. **Start the game servers**
 
+In two separate terminals, start the backend and frontend:
+
 ```bash
-./start-game.sh
+# Terminal 1: Start Nakama server and backend logic
+cd server
+npm run dev
+
+# Terminal 2: Start the React web client
+cd client
+npm run dev
 ```
 
 This will start:
 
--   Nakama game server (ports 7349-7351)
+-   Nakama game server (ports 10000 - API/WebSocket, 10001 - Admin Console)
 -   PostgreSQL database (port 5432)
 -   Web client (http://localhost:8080)
 
@@ -52,8 +60,11 @@ This will start:
 
 4. **Stop servers**
 
+In the server directory, stop the backend and database:
+
 ```bash
-./stop-game.sh
+cd server
+npm run stop
 ```
 
 ### Reset Database (Optional)
@@ -82,8 +93,9 @@ This will start:
 
 **Frontend:**
 
--   Vanilla JavaScript (ES6 modules)
--   HTML5 + CSS3
+-   React (with TypeScript)
+-   Vite (build tool)
+-   Tailwind CSS (utility-first styling)
 -   WebSocket for real-time communication
 
 ### Project Structure
@@ -94,33 +106,45 @@ tic-tak-toe-lilagames/
 │   ├── docker-compose.yml      # Docker services configuration
 │   ├── local.yml               # Nakama server configuration
 │   └── build/
-│       └── index.js            # Game server logic (391 lines)
+│       └── index.js            # Game server logic
 ├── client/
+│   ├── package.json            # Client dependencies and scripts
+│   ├── tailwind.config.js      # Tailwind CSS config
+│   ├── postcss.config.js       # PostCSS config
+│   ├── public/
+│   │   └── ...                 # Static assets
 │   └── src/
-│       ├── index.html          # Main HTML page
-│       ├── game.js             # Client game logic (715 lines)
-│       ├── styles.css          # Styles and animations
-│       └── nakama-js.mjs       # Nakama JavaScript SDK
-├── start-game.sh               # Start all services
-├── stop-game.sh                # Stop all services
+│       ├── App.tsx             # Main React component
+│       ├── main.tsx            # React entry point
+│       ├── index.css           # Tailwind CSS imports
+│       ├── components/         # React components
+│       │   ├── Board.tsx
+│       │   ├── GameButton.tsx
+│       │   ├── GameOverModal.tsx
+│       │   ├── Leaderboard.tsx
+│       │   ├── PlayerInfo.tsx
+│       │   ├── ScorePanel.tsx
+│       │   └── Tile.tsx
+│       └── utils/              # Utility modules
+│           ├── gameLogic.ts
+│           ├── helpers.ts
+│           └── nakama.ts
 ├── clear-test-data.sh          # Reset database
-├── README.md                   # This file
-└── DEPLOYMENT.md               # Cloud deployment guide
+└── README.md
 ```
 
 ## 🔧 Configuration
 
 ### Server Ports
 
--   **7349** - Nakama gRPC API
--   **7350** - Nakama HTTP API & WebSocket
--   **7351** - Nakama Admin Console
+-   **10000** - Nakama API & WebSocket (use this for client connection)
+-   **10001** - Nakama Admin Console
 -   **5432** - PostgreSQL
 -   **8080** - Client web server
 
 ### Admin Console
 
-Access Nakama admin console at: http://localhost:7351
+Access Nakama admin console at: http://localhost:10001
 
 -   **Username:** admin
 -   **Password:** password
@@ -135,16 +159,6 @@ Access Nakama admin console at: http://localhost:7351
 
 ## 🐛 Troubleshooting
 
-### Servers won't start
-
-```bash
-# Check if Docker is running
-docker ps
-
-# Restart Docker Desktop, then try again
-./start-game.sh
-```
-
 ### Can't connect to game
 
 ```bash
@@ -154,9 +168,6 @@ docker ps
 # View server logs
 docker logs nakama --tail 50
 
-# Restart services
-./stop-game.sh
-./start-game.sh
 ```
 
 ### Players not matching
@@ -181,23 +192,6 @@ For production deployment:
 4. Enable SSL/HTTPS
 5. Set up firewall rules
 6. Enable rate limiting
-
-## 🧪 Development
-
-### Run in Development Mode
-
-```bash
-# Start services
-./start-game.sh
-
-# View live logs
-docker logs -f nakama
-
-# Make changes to code
-# Client: Edit files in client/src/
-# Server: Edit server/build/index.js, then restart:
-docker restart nakama
-```
 
 ## 📝 API Documentation
 
@@ -235,6 +229,6 @@ OpCode 6: CHAT           // Chat message (reserved)
 Having issues? Check:
 
 1. Docker is running
-2. Ports 7350 and 8080 are available
+2. Ports 10000 and 10001 are available
 3. Browser console for errors (F12)
 4. Server logs: `docker logs nakama --tail 50`
